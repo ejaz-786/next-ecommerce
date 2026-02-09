@@ -1,6 +1,6 @@
 # Proprietary License (View-Only)
 
-Copyright (c) [YEAR] [YOUR NAME]. All rights reserved.
+Copyright (c) 2026 ejaz-786. All rights reserved.
 
 ### 1. Purpose
 This repository is made public for the sole purpose of portfolio demonstration, code review, and educational observation. It serves as a visual representation of the author's work.
@@ -13,7 +13,7 @@ Permission is **NOT** granted to any person obtaining a copy of this software an
 * **Distribute:** You may not redistribute this code in any format (source or binary).
 
 ### 3. Ownership
-All intellectual property rights, including copyright, remain exclusively with [YOUR NAME]. No ownership or usage rights are transferred by making this code visible to the public.
+All intellectual property rights, including copyright, remain exclusively with ejaz-786. No ownership or usage rights are transferred by making this code visible to the public.
 
 ### 4. Termination of Access
 Any unauthorized use, cloning, or distribution of this code constitutes a violation of international copyright law. The author reserves the right to request a DMCA takedown or pursue legal action for any unauthorized use of this material.
