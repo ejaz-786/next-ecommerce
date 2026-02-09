@@ -4,9 +4,9 @@ import type { Product } from "@/domain/types";
 const DUMMYJSON_URL = "https://dummyjson.com";
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function GET(request: NextRequest, { params }: RouteParams) {
