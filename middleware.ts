@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const protectedRoutes = ["/products", "/cart", "/profile"];
-const publicRoutes = ["/login", "/"];
+const publicRoutes = ["/", "/login"];
 const authRoutes = ["/login"];
 
 export function middleware(request: NextRequest) {
@@ -12,18 +12,23 @@ export function middleware(request: NextRequest) {
   const token = request.cookies.get("accessToken")?.value;
 
   // Check if the route is protected
-  const isProtected = protectedRoutes.some((route) =>
-    pathname.startsWith(route),
+  const isProtected = protectedRoutes.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`),
   );
-  const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
+  const isAuthRoute = authRoutes.some(
+    (route) => pathname === route || pathname.startsWith(`${route}/`),
+  );
   const isPublic = publicRoutes.some(
-    (route) => pathname === route || pathname.startsWith(route),
+    (route) =>
+      route === "/"
+        ? pathname === "/"
+        : pathname === route || pathname.startsWith(`${route}/`),
   );
 
   // If there's no token
   if (!token) {
     // Allow public routes
-    if (isPublic || pathname === "/") {
+    if (isPublic) {
       return NextResponse.next();
     }
     // Redirect to login for protected routes

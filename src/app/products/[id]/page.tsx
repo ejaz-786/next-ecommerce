@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Header, Card } from "@/ui/components";
+import { Card } from "@/ui/components";
 import { ProductDetails } from "@/ui/components/ProductDetails";
 import { productsService } from "@/services";
 
@@ -22,7 +22,7 @@ export async function generateMetadata({
       title: `${product.title} | Emart`,
       description: product.description.substring(0, 160),
     };
-  } catch (error) {
+  } catch {
     return {
       title: "Product | Emart",
     };
@@ -34,7 +34,6 @@ async function ProductContent({ productId }: { productId: number }) {
 
   return (
     <>
-      <Header />
       <div className="max-w-6xl mx-auto w-full px-4 py-8">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 mb-8 text-sm text-gray-400">

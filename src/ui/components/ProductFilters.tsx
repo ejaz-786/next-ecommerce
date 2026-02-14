@@ -16,7 +16,6 @@ function ProductFiltersContent({ categories }: ProductFiltersProps) {
   const currentCategory = searchParams.get("category") || "";
   const currentSort = searchParams.get("sortBy") || "title";
   const currentOrder = searchParams.get("order") || "asc";
-  const currentPage = parseInt(searchParams.get("page") || "1");
 
   const handleCategoryChange = (category: string) => {
     const params = new URLSearchParams(searchParams);
@@ -34,12 +33,6 @@ function ProductFiltersContent({ categories }: ProductFiltersProps) {
     params.set("sortBy", sortBy);
     params.set("order", order);
     params.set("page", "1");
-    router.push(`/products?${params.toString()}`);
-  };
-
-  const handlePageChange = (newPage: number) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("page", newPage.toString());
     router.push(`/products?${params.toString()}`);
   };
 

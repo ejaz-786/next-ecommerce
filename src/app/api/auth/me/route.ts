@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getAccessToken } from "@/lib/auth";
 import type { User } from "@/domain/types";
 
-const DUMMYJSON_URL = "https://dummyjson.com";
+const DUMMYJSON_URL = process.env.DUMMYJSON_URL || "https://dummyjson.com";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const token = await getAccessToken();
 

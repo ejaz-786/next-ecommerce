@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from "@/store/cartSlice";
-import { Header, Button, Card } from "@/ui/components";
+import { Button, Card } from "@/ui/components";
 import { CartItemComponent } from "@/ui/components/CartItem";
 import type { RootState, AppDispatch } from "@/store";
 import { useEffect, useState } from "react";
@@ -11,28 +11,35 @@ import { useEffect, useState } from "react";
 export default function CartPage() {
   const dispatch = useDispatch<AppDispatch>();
   const cart = useSelector((state: RootState) => state.cart);
-  const [isMounted, setIsMounted] = useState(false);
-  const [notification, setNotification] = useState<string | null>(null);
-
-  useEffect(() => {
-    setIsMounted(true);
-
-    // Check for cart notification
-    const notification = localStorage.getItem("cartNotification");
-    if (notification) {
-      try {
-        const { message } = JSON.parse(notification);
-        setNotification(message);
-        localStorage.removeItem("cartNotification");
-
-        // Auto-dismiss notification after 3 seconds
-        const timer = setTimeout(() => setNotification(null), 3000);
-        return () => clearTimeout(timer);
-      } catch (error) {
-        console.error("Failed to parse notification:", error);
-      }
+  const [notification, setNotification] = useState<string | null>(() => {
+    if (typeof window === "undefined") {
+      return null;
     }
 
+    const stored = localStorage.getItem("cartNotification");
+    if (!stored) {
+      return null;
+    }
+
+    try {
+      const { message } = JSON.parse(stored) as { message?: string };
+      localStorage.removeItem("cartNotification");
+      return message ?? null;
+    } catch {
+      return null;
+    }
+  });
+
+  useEffect(() => {
+    if (!notification) {
+      return;
+    }
+
+    const timer = setTimeout(() => setNotification(null), 3000);
+    return () => clearTimeout(timer);
+  }, [notification]);
+
+  useEffect(() => {
     // Save cart to localStorage
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
@@ -51,13 +58,8 @@ export default function CartPage() {
   const shipping = subtotal > 0 ? 10 : 0;
   const total = subtotal + tax + shipping;
 
-  if (!isMounted) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <>
-      <Header />
       <div className="max-w-6xl mx-auto w-full px-4 py-8">
         <h1 className="text-4xl font-bold text-white mb-8">Shopping Cart</h1>
 

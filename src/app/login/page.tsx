@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Button, Input, Card } from "@/ui/components";
 import { authService } from "@/services";
 import type { LoginCredentials } from "@/domain/types";
+import type { AxiosError } from "axios";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -26,11 +27,13 @@ export default function LoginPage() {
       setError(null);
       await authService.login(data);
       router.push("/products");
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const axiosError = err as AxiosError<{ message?: string }>;
       setError(
-        err?.response?.data?.message || "Failed to login. Please try again.",
+        axiosError.response?.data?.message ||
+          "Failed to login. Please try again.",
       );
-      console.error("Login error:", err);
+      console.error("Login error:", axiosError);
     }
   };
   // bg-linear-to-br from-gray-900 to-black

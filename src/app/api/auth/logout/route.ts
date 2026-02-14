@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { clearTokens } from "@/lib/auth";
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     // Clear tokens from cookies
     await clearTokens();

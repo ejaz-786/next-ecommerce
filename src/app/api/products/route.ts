@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { ProductsResponse } from "@/domain/types";
 
-const DUMMYJSON_URL = "https://dummyjson.com";
+const DUMMYJSON_URL = process.env.DUMMYJSON_URL || "https://dummyjson.com";
 
 export async function GET(request: NextRequest) {
   try {
@@ -27,7 +27,6 @@ export async function GET(request: NextRequest) {
         url += `&sortBy=${sortBy}&order=${order}`;
       }
     }
-    console.log("check1:", url);
     const response = await fetch(url);
 
     if (!response.ok) {

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import type { ProductsResponse } from "@/domain/types";
 
-const DUMMYJSON_URL = "https://dummyjson.com";
+const DUMMYJSON_URL = process.env.DUMMYJSON_URL || "https://dummyjson.com";
 
 export async function GET(request: NextRequest) {
   try {

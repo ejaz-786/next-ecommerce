@@ -1,8 +1,17 @@
 import axios, { AxiosInstance } from "axios";
 
+const normalizeBaseUrl = (url: string) => url.replace(/\/+$/, "");
+const serverBaseUrl =
+  process.env.INTERNAL_API_BASE_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:3000";
+
 // Create an axios instance for making requests
 const apiClient: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000",
+  baseURL:
+    typeof window === "undefined"
+      ? normalizeBaseUrl(serverBaseUrl)
+      : normalizeBaseUrl(process.env.NEXT_PUBLIC_API_URL || ""),
   withCredentials: true, // Send cookies with requests
 });
 

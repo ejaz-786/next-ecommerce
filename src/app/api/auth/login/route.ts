@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { setTokens } from "@/lib/auth";
 import type { LoginCredentials, AuthResponse } from "@/domain/types";
+import { log } from "console";
 
-const DUMMYJSON_URL = "https://dummyjson.com";
+// const DUMMYJSON_URL = "https://dummyjson.com";
+const DUMMYJSON_URL = process.env.DUMMYJSON_URL || "https://dummyjson.com";
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,10 +23,10 @@ export async function POST(request: NextRequest) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "access-control-allow-origin": "*",
       },
       body: JSON.stringify(body),
     });
-    console.log("cheking...", response);
 
     if (!response.ok) {
       return NextResponse.json(
@@ -51,7 +53,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json(
-      { message: "Internal server error-bhari mistake ho gaya " },
+      { message: "Internal server error" },
       { status: 500 },
     );
   }

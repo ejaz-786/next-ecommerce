@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import type { Product } from "@/domain/types";
 
-const DUMMYJSON_URL = "https://dummyjson.com";
+const DUMMYJSON_URL = process.env.DUMMYJSON_URL || "https://dummyjson.com";
 
 interface RouteParams {
   params: Promise<{
@@ -9,7 +9,7 @@ interface RouteParams {
   }>;
 }
 
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(_: Request, { params }: RouteParams) {
   try {
     const { id } = await params;
 

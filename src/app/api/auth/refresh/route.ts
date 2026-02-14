@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getRefreshToken, setTokens } from "@/lib/auth";
 import type { RefreshTokenResponse } from "@/domain/types";
 
-const DUMMYJSON_URL = "https://dummyjson.com";
+const DUMMYJSON_URL = process.env.DUMMYJSON_URL || "https://dummyjson.com";
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     const refreshToken = await getRefreshToken();
 
